@@ -1,7 +1,7 @@
 <template>
   <v-row class="height-100 flex-column flex-md-row ma-0">
     <v-col class="teal flex-grow-0 flex-md-grow-1">
-      <h1 class="ml-5 font-weight-bold text--center">PushBot</h1>
+      <h1 class="ml-5 font-weight-bold text--center">PushBots</h1>
     </v-col>
 
     <!--User Login Form-->
