@@ -1,89 +1,95 @@
 <template>
   <v-app dark>
-    <v-navigation-drawer
-      v-model="drawer"
-      :mini-variant="miniVariant"
-      :clipped="clipped"
-      fixed
-      app
-    >
-      <v-list>
-        <v-list-item
-          v-for="(item, i) in items"
-          :key="i"
-          :to="item.to"
-          router
-          exact
-        >
-          <v-list-item-action>
-            <v-icon>{{ item.icon }}</v-icon>
-          </v-list-item-action>
-          <v-list-item-content>
-            <v-list-item-title v-text="item.title" />
-          </v-list-item-content>
-        </v-list-item>
-      </v-list>
-    </v-navigation-drawer>
-    <v-app-bar :clipped-left="clipped" fixed app>
-      <v-app-bar-nav-icon @click.stop="drawer = !drawer" />
-      <v-avatar tile>
+    <!--Navbar-->
+    <v-app-bar fixed app>
+      <v-app-bar-nav-icon />
+      <v-avatar class="mx-2">
         <img src="logo.png" alt="pushbot" />
       </v-avatar>
 
       <v-text-field
-        outlined
+        solo
         dark
         dense
-        height="24"
-        placeholder="search your apps"
+        placeholder="Search your apps"
         prepend-inner-icon="search"
+        hide-details
       ></v-text-field>
+
       <v-spacer />
-      <v-btn text><v-icon>mdi-account-group</v-icon> 300</v-btn>
-      <v-btn text><v-icon>mdi-apps</v-icon> 653</v-btn>
-      <div>
-        <h4>Ahmed Anwar</h4>
-        <v-chip><v-icon left>mdi-crown-outline</v-icon>Premium</v-chip>
-      </div>
-      <v-avatar>
-        <img src="https://cdn.vuetifyjs.com/images/john.jpg" alt="John" />
-      </v-avatar>
+      <v-btn v-for="(item, index) in NavButtons" :key="index" text
+        ><v-icon class="mr-1">{{ item.icon }}</v-icon>
+        {{ item.title }}
+      </v-btn>
+
+      <span class="d-flex flex-column mx-2 pa-2">
+        <h5 v-text="`${$auth.user.name}`"></h5>
+        <v-chip x-small>
+          <v-icon dense left x-small>mdi-crown-outline</v-icon>
+          {{ $auth.user.plan }}
+        </v-chip>
+      </span>
+
+      <v-menu v-model="showLogout" offset-y absloute>
+        <template v-slot:activator="{ on }">
+          <v-avatar class="clickable" v-on="on">
+            <img :src="$auth.user.avatar" :alt="$auth.user.name" />
+          </v-avatar>
+        </template>
+        <v-list>
+          <v-list-item @click="Logout()">
+            <v-list-item-title>LogOut</v-list-item-title>
+          </v-list-item>
+        </v-list>
+      </v-menu>
     </v-app-bar>
+
+    <!--Main Content-->
     <v-content>
-      <v-container>
+      <v-container fill-height>
         <nuxt />
       </v-container>
     </v-content>
-    <v-footer :fixed="fixed" app>
-      <span>&copy; 2019</span>
+
+    <!--Footer-->
+    <v-footer :fixed="fixed" app class="d-flex justify-center">
+      <span class="text-center">PushBot &copy;{{ Year }}</span>
     </v-footer>
+
+    <!--Notification-->
+    <snackbar></snackbar>
   </v-app>
 </template>
 
 <script>
 export default {
+  middleware: 'auth',
   data() {
     return {
-      clipped: false,
-      drawer: false,
       fixed: false,
-      items: [
-        {
-          icon: 'mdi-apps',
-          title: 'Welcome',
-          to: '/'
-        },
-        {
-          icon: 'mdi-chart-bubble',
-          title: 'Inspire',
-          to: '/inspire'
-        }
-      ],
-      miniVariant: false,
-      right: true,
-      rightDrawer: false,
-      title: 'Vuetify.js'
+      showLogout: false
+    }
+  },
+  computed: {
+    Year() {
+      return new Date().getFullYear()
+    },
+    NavButtons() {
+      return [
+        { icon: 'mdi-account-group', title: this.$auth.user.totalApps },
+        { icon: 'mdi-apps', title: this.$auth.user.totalDevices }
+      ]
+    }
+  },
+  methods: {
+    Logout() {
+      this.$auth.logout()
     }
   }
 }
 </script>
+<style>
+.clickable:hover {
+  cursor: pointer;
+}
+</style>

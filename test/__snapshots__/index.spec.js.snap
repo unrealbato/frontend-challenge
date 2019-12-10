@@ -1,0 +1,15 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Home Page HTML Render The Same 1`] = `
+"<div class=\\"row height-100\\" pagination_length=\\"5\\" take=\\"5\\"><div class=\\"flex-grow-1 col\\"><div class=\\"row my-2\\"><button type=\\"button\\" class=\\"v-btn v-btn--flat v-btn--text theme--light v-size--small\\"><span class=\\"v-btn__content\\"><i aria-hidden=\\"true\\" class=\\"v-icon notranslate mr-2 mdi mdi-check theme--light\\"></i>
+        COMPLETE
+      </span></button><button type=\\"button\\" class=\\"v-btn v-btn--flat v-btn--text theme--light v-size--small\\"><span class=\\"v-btn__content\\"><i aria-hidden=\\"true\\" class=\\"v-icon notranslate mr-2 mdi mdi-settings theme--light\\"></i>
+        IN SETUP
+      </span></button><button type=\\"button\\" class=\\"v-btn v-btn--flat v-btn--text theme--light v-size--small\\"><span class=\\"v-btn__content\\"><i aria-hidden=\\"true\\" class=\\"v-icon notranslate mr-2 mdi mdi-share theme--light\\"></i>
+        SHARED
+      </span></button><button type=\\"button\\" class=\\"v-btn v-btn--flat v-btn--text theme--light v-size--small\\"><span class=\\"v-btn__content\\"><i aria-hidden=\\"true\\" class=\\"v-icon notranslate mr-2 mdi mdi-chart-bar-stacked theme--light\\"></i>
+        ACTIVE
+      </span></button></div> <div class=\\"row\\"> <ul class=\\"v-pagination theme--light\\"><li><button type=\\"button\\" class=\\"v-pagination__navigation v-pagination__navigation--disabled\\"><i aria-hidden=\\"true\\" class=\\"v-icon notranslate material-icons theme--light\\">$prev</i></button></li><li><button type=\\"button\\" class=\\"v-pagination__item v-pagination__item--active primary\\">1</button></li><li><button type=\\"button\\" class=\\"v-pagination__item\\">2</button></li><li><span class=\\"v-pagination__more\\">...</span></li><li><button type=\\"button\\" class=\\"v-pagination__item\\">19</button></li><li><button type=\\"button\\" class=\\"v-pagination__item\\">20</button></li><li><button type=\\"button\\" class=\\"v-pagination__navigation\\"><i aria-hidden=\\"true\\" class=\\"v-icon notranslate material-icons theme--light\\">$next</i></button></li></ul></div></div> <div class=\\"d-flex flex-sm-grow-0 justify-center col\\"><button type=\\"button\\" class=\\"v-btn v-btn--contained theme--light v-size--default\\"><span class=\\"v-btn__content\\"><i aria-hidden=\\"true\\" class=\\"v-icon notranslate mdi mdi-plus theme--light\\"></i>
+      NEW INTEGRATION
+    </span></button></div></div>"
+`;

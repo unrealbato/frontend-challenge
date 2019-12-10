@@ -1,75 +1,120 @@
 <template>
-  <v-card>
-    <v-card-title>
-      <v-list flat>
-        <v-list-item>
+  <v-card class="pa-2 ma-1">
+    <v-card-title class="pa-1">
+      <v-list dense flat max-width="400" max-height="300" class="py-0">
+        <v-list-item class="pa-2">
           <v-list-item-avatar>
-            <v-avatar>
-              <v-img src="https://picsum.photos/50/50"></v-img>
+            <v-avatar tile>
+              <v-img :src="app.icon || 'logo.png'"></v-img>
             </v-avatar>
           </v-list-item-avatar>
-          <v-list-item-content>
-            <v-list-item-title>sincere late structure</v-list-item-title>
-            <v-list-item-subtitle
-              class="d-flex align-content-center justify-even"
+
+          <v-list-item-content class="pa-0" disabled>
+            <v-list-item-title class="my-2"
+              >sincere late structure</v-list-item-title
             >
-              <v-icon x-small>mdi-cellphone-iphone</v-icon> 5329
-              <v-icon small>mdi-apple</v-icon>
+            <v-list-item-subtitle>
+              <span class="pl-0">
+                <v-icon small>mdi-cellphone-iphone</v-icon>
+                {{ app.totalUsers }}
+              </span>
+
+              <span v-for="(platform, index) in platformIcons" :key="index">
+                <v-icon small>{{ platform }}</v-icon>
+              </span>
             </v-list-item-subtitle>
           </v-list-item-content>
+
           <v-list-item-action>
-            <v-btn icon><v-icon>mdi-dots-vertical</v-icon></v-btn>
+            <v-list>
+              <v-list-item>
+                <v-btn icon>
+                  <v-icon>mdi-dots-vertical</v-icon>
+                </v-btn>
+              </v-list-item>
+            </v-list>
           </v-list-item-action>
         </v-list-item>
-        <v-list-item> </v-list-item>
+        <v-list-item>
+          <line-chart
+            :id="app.id"
+            :data="dataSet"
+            label="Value"
+            class="responsive"
+          ></line-chart>
+        </v-list-item>
+        <v-list-item>
+          <v-list-item-subtitle class="text-center">
+            <span>
+              <v-icon color="teal">mdi-rectangle</v-icon>
+              Daily active users
+            </span>
+          </v-list-item-subtitle>
+        </v-list-item>
       </v-list>
     </v-card-title>
+    <v-card-actions class="pa-0">
+      <v-list>
+        <v-list-item class="py-0">
+          <v-btn v-for="(item, index) in items" :key="index" icon>
+            <v-icon>{{ item.icon }}</v-icon>
+          </v-btn>
+        </v-list-item>
+      </v-list>
+    </v-card-actions>
   </v-card>
 </template>
 
 <script>
 export default {
   name: 'AppCard',
+  props: {
+    app: {
+      type: Object,
+      required: true
+    }
+  },
   data() {
     return {
-      chartData: [
-        {
-          label: '2019-11-13',
-          value: 249
-        },
-        {
-          label: '2019-11-14',
-          value: 351
-        },
-        {
-          label: '2019-11-15',
-          value: 973
-        },
-        {
-          label: '2019-11-16',
-          value: 180
-        },
-        {
-          label: '2019-11-17',
-          value: 666
-        },
-        {
-          label: '2019-11-18',
-          value: 845
-        },
-        {
-          label: '2019-11-19',
-          value: 455
-        },
-        {
-          label: '2019-11-20',
-          value: 717
-        }
-      ],
-      value: [0, 2, 5, 9, 5, 10, 3, 5, 0, 0, 1, 8, 2, 9, 0]
+      items: [
+        { icon: 'mdi-send' },
+        { icon: 'mdi-history' },
+        { icon: 'mdi-cellphone-iphone' },
+        { icon: 'mdi-account-group' },
+        { icon: 'mdi-settings' },
+        { icon: 'mdi-chart-bar' },
+        { icon: 'mdi-twitter' }
+      ]
+    }
+  },
+
+  computed: {
+    dataSet() {
+      const data = this.app.chartData.map((_) => {
+        return [_.label, _.value]
+      })
+      return data
+    },
+    platformIcons() {
+      const icons = Object.keys(this.app.platforms)
+        .map((icon) => {
+          if (this.app.platforms[icon] === true) {
+            if (icon === 'chrome') return 'mdi-google-chrome'
+            if (icon === 'ios') return 'mdi-apple'
+            if (icon === 'safari') return 'mdi-apple-safari'
+            else return `mdi-${icon}`
+          }
+        })
+        .filter((val) => val)
+      return icons
     }
   }
 }
 </script>
 
-<style scoped></style>
+<style scoped>
+.responsive {
+  width: 100% !important;
+  height: auto !important;
+}
+</style>

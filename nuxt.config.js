@@ -42,11 +42,11 @@ export default {
   /*
    ** Global CSS
    */
-  css: [],
+  css: ['@/assets/utils.scss'],
   /*
    ** Plugins to load before mounting the App
    */
-  plugins: [],
+  plugins: ['@/plugins/global_components', '@/plugins/vue-chartkick'],
   /*
    ** Nuxt.js dev-modules
    */
@@ -61,13 +61,42 @@ export default {
   modules: [
     // Doc: https://axios.nuxtjs.org/usage
     '@nuxtjs/axios',
+    '@nuxtjs/auth',
     '@nuxtjs/pwa'
   ],
   /*
    ** Axios module configuration
    ** See https://axios.nuxtjs.org/options
    */
-  axios: {},
+  axios: {
+    baseURL: 'https://pushbots-fend-challenge.herokuapp.com'
+  },
+  /* Nuxt Auth Module */
+  auth: {
+    resetOnError: true,
+    defaultStrategy: 'local',
+    strategies: {
+      local: {
+        endpoints: {
+          login: {
+            url: '/login',
+            method: 'post',
+            propertyName: 'token'
+          },
+          user: { url: '/api/me', method: 'get', propertyName: false },
+          logout: false
+        },
+        tokenType: 'Bearer',
+        tokenRequired: true
+      }
+    },
+    redirect: {
+      login: '/auth',
+      logout: '/auth',
+      home: '/',
+      user: '/'
+    }
+  },
   /*
    ** vuetify module configuration
    ** https://github.com/nuxt-community/vuetify-module
@@ -78,7 +107,7 @@ export default {
       dark: true,
       themes: {
         dark: {
-          primary: colors.blue.darken2,
+          primary: colors.teal.base,
           accent: colors.grey.darken3,
           secondary: colors.amber.darken3,
           info: colors.teal.lighten1,
@@ -97,5 +126,11 @@ export default {
      ** You can extend webpack config here
      */
     extend(config, ctx) {}
-  }
+  },
+
+  generate: {
+    routes: ['/auth']
+  },
+
+  router: {}
 }

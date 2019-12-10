@@ -1,10 +1,13 @@
 <template>
-  <v-app>
+  <v-app dark>
     <v-content>
-      <v-container fluid class="ma-0 pa-0 height-100 grey lighten-5">
+      <v-container fluid fill-height class="pa-0">
         <nuxt />
       </v-container>
     </v-content>
+
+    <!--Notification-->
+    <snackbar></snackbar>
   </v-app>
 </template>
 
@@ -15,8 +18,4 @@ export default {
   }
 }
 </script>
-<style>
-.height-100 {
-  height: 100%;
-}
-</style>
+<style></style>
